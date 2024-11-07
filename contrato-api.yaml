@@ -26,8 +26,29 @@ paths:
             application/json:
               schema:
                 type: array
-                items: &ref_1
-                  $ref: '#/components/schemas/Jogador'
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID
+                    nome:
+                      type: string
+                    sexo:
+                      type: string
+                    idade:
+                      type: string
+                    nivel_habilidade:
+                      type: string
+                    avatar:
+                      type: string
+                  required:
+                    - id
+                    - nome
+                    - sexo
+                    - idade
+                    - nivel_habilidade
+                    - avatar
           headers: {}
       security: []
   /jogador/:
@@ -407,7 +428,8 @@ paths:
                     description: status
                   jogadores:
                     type: array
-                    items: *ref_1
+                    items: &ref_1
+                      $ref: '#/components/schemas/Jogador'
                     title: jogadores
                     description: Participantes da partida de vôlei
                   id_local:
@@ -908,7 +930,7 @@ paths:
           headers: {}
       security: []
   /autenticacao/entrar:
-    get:
+    post:
       summary: Entrar
       deprecated: false
       description: ''
@@ -937,7 +959,8 @@ paths:
                 type: object
                 properties: {}
           headers: {}
-      security: []
+      security:
+        - bearer: []
 components:
   schemas:
     Jogador:
@@ -1099,5 +1122,8 @@ components:
         - id
         - nota
         - comentario
-  securitySchemes: {}
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
 servers: []
