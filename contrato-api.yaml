@@ -9,7 +9,7 @@ tags:
   - name: /jogo
   - name: /categoria
   - name: /convite
-  - name: autenticacao
+  - name: /autenticacao
 paths:
   /jogador:
     get:
@@ -892,7 +892,7 @@ paths:
       deprecated: false
       description: ''
       tags:
-        - autenticacao
+        - /autenticacao
       parameters: []
       requestBody:
         content:
@@ -935,7 +935,7 @@ paths:
       deprecated: false
       description: ''
       tags:
-        - autenticacao
+        - /autenticacao
       parameters: []
       requestBody:
         content:
