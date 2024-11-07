@@ -1,0 +1,1103 @@
+openapi: 3.0.1
+info:
+  title: rubi
+  description: ''
+  version: 1.0.0
+tags:
+  - name: /jogador
+  - name: /local
+  - name: /jogo
+  - name: /categoria
+  - name: /convite
+  - name: autenticacao
+paths:
+  /jogador:
+    get:
+      summary: Listar jogadores
+      deprecated: false
+      description: ''
+      tags:
+        - /jogador
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items: &ref_1
+                  $ref: '#/components/schemas/Jogador'
+          headers: {}
+      security: []
+  /jogador/:
+    patch:
+      summary: Editar jogador
+      deprecated: false
+      description: ''
+      tags:
+        - /jogador
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                sexo:
+                  type: string
+                idade:
+                  type: string
+                nivel_habilidade:
+                  type: string
+                avatar:
+                  type: string
+                email:
+                  type: string
+              required:
+                - avatar
+                - email
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /local:
+    get:
+      summary: Listar locais
+      deprecated: false
+      description: ''
+      tags:
+        - /local
+      parameters:
+        - name: ordenar_por
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: busca
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items: &ref_0
+                  $ref: '#/components/schemas/Local'
+          headers: {}
+      security: []
+    post:
+      summary: Criar local
+      deprecated: false
+      description: ''
+      tags:
+        - /local
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                descricao:
+                  type: string
+                endereco:
+                  type: string
+                valor_hora:
+                  type: string
+              required:
+                - nome
+                - descricao
+                - endereco
+                - valor_hora
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+                required:
+                  - 01JBTG9N6ZNSC6CKQ52HVS8095
+          headers: {}
+      security: []
+  /local/{id}:
+    patch:
+      summary: Editar local
+      deprecated: false
+      description: ''
+      tags:
+        - /local
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                descricao:
+                  type: string
+                endereco:
+                  type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+    get:
+      summary: Detalhar local
+      deprecated: false
+      description: ''
+      tags:
+        - /local
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID
+                  nome:
+                    type: string
+                  descricao:
+                    type: string
+                  endereco:
+                    type: string
+                  valor_hora:
+                    type: string
+                required:
+                  - id
+                  - nome
+                  - descricao
+                  - endereco
+                  - valor_hora
+          headers: {}
+      security: []
+  /jogo:
+    get:
+      summary: Listar jogos
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: categoria
+          in: query
+          description: group
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: status
+          required: false
+          schema:
+            type: string
+        - name: data
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: estou_participando
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: boolean
+        - name: ordenar_por
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: busca
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: ID
+                    status:
+                      type: string
+                      description: status
+                    local: *ref_0
+                    data:
+                      type: string
+                      format: date-time
+                      description: Dia e horário da partida de vôlei
+                    categoria: &ref_2
+                      $ref: '#/components/schemas/Categoria'
+                    anfitriao:
+                      description: Organizador da partida
+                      type: object
+                      properties:
+                        nome:
+                          type: string
+                      required:
+                        - nome
+                    acesso:
+                      type: string
+                      description: Público ou privado
+                    quantidade_horas:
+                      type: number
+                  required:
+                    - id
+                    - status
+                    - local
+                    - data
+                    - categoria
+                    - anfitriao
+                    - acesso
+                    - quantidade_horas
+          headers: {}
+      security: []
+    post:
+      summary: Criar jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_local:
+                  type: string
+                  description: Local da partida de vôlei
+                data:
+                  type: string
+                  format: date-time
+                  description: Dia e horário da partida de vôlei
+                id_categoria:
+                  type: string
+                quantidade_horas:
+                  type: integer
+                acesso:
+                  type: string
+                  description: Público ou privado
+              required:
+                - id_local
+                - data
+                - id_categoria
+                - quantidade_horas
+                - acesso
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /jogo/{id}:
+    patch:
+      summary: Editar jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_local:
+                  type: string
+                  description: Local da partida de vôlei
+                data:
+                  type: string
+                  format: date-time
+                  description: Dia e horário da partida de vôlei
+                id_categoria:
+                  type: string
+                id_anfitriao:
+                  type: string
+                  description: Organizador da partida
+                quantidade_horas:
+                  type: number
+                acesso:
+                  type: string
+                  description: Público ou privado
+              required:
+                - id_local
+                - id_categoria
+                - id_anfitriao
+                - acesso
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID
+                  status:
+                    type: string
+                    description: status
+                  jogadores:
+                    type: array
+                    items: *ref_1
+                    title: jogadores
+                    description: Participantes da partida de vôlei
+                  id_local:
+                    type: string
+                    description: Local da partida de vôlei
+                  data:
+                    type: string
+                    format: date-time
+                    description: Dia e horário da partida de vôlei
+                  id_categoria:
+                    type: string
+                  id_anfitriao:
+                    type: string
+                    description: Organizador da partida
+                  quantidade_horas:
+                    type: integer
+                  nota:
+                    type: number
+                    description: Avaliação da partida
+                  acesso:
+                    type: string
+                    description: Público ou privado
+                required:
+                  - id
+                  - id_local
+                  - id_categoria
+                  - id_anfitriao
+                  - quantidade_horas
+                  - nota
+                  - acesso
+          headers: {}
+      security: []
+    get:
+      summary: Detalhar jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID
+                  status:
+                    type: string
+                    description: status
+                  jogadores:
+                    type: array
+                    items: *ref_1
+                    title: jogadores
+                    description: Participantes da partida de vôlei
+                  local: *ref_0
+                  data:
+                    type: string
+                    format: date-time
+                    description: Dia e horário da partida de vôlei
+                  categoria: *ref_2
+                  anfitriao:
+                    description: Organizador da partida
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID
+                      nome:
+                        type: string
+                    required:
+                      - id
+                      - nome
+                  quantidade_horas:
+                    type: number
+                  nota:
+                    type: number
+                  avaliacoes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Avaliacao'
+                required:
+                  - id
+                  - status
+                  - local
+                  - data
+                  - categoria
+                  - anfitriao
+                  - quantidade_horas
+                  - nota
+                  - avaliacoes
+          headers: {}
+      security: []
+  /jogo/{id}/cancelar:
+    post:
+      summary: Cancelar jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /jogo/{id}/convidar:
+    post:
+      summary: Convidar jogadores
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_jogadores:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - id_jogadores
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /jogo/{id}/desistir:
+    post:
+      summary: Desistir do jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /jogo/{id}/avaliar:
+    post:
+      summary: Avaliar jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nota:
+                  type: string
+                comentario:
+                  type: string
+              required:
+                - nota
+                - comentario
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /jogo/{id}/ingressar:
+    post:
+      summary: Ingressar jogo
+      deprecated: false
+      description: ''
+      tags:
+        - /jogo
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                sexo:
+                  type: string
+                idade:
+                  type: string
+                nivel_habilidade:
+                  type: string
+                avatar:
+                  type: string
+                email:
+                  type: string
+              required:
+                - nome
+                - sexo
+                - idade
+                - nivel_habilidade
+                - avatar
+                - email
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /categoria:
+    get:
+      summary: Listar categorias
+      deprecated: false
+      description: ''
+      tags:
+        - /categoria
+      parameters:
+        - name: busca
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items: *ref_2
+          headers: {}
+      security: []
+    post:
+      summary: Criar categoria
+      deprecated: false
+      description: ''
+      tags:
+        - /categoria
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: name
+                descricao:
+                  type: string
+                faixa_etaria:
+                  type: string
+                genero:
+                  type: string
+                nivel_habilidade:
+                  type: string
+                numero_jogadores:
+                  type: object
+                  properties:
+                    min:
+                      type: number
+                    max:
+                      type: number
+                  required:
+                    - min
+                    - max
+              required:
+                - nome
+                - descricao
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /categoria/{id}:
+    patch:
+      summary: Editar categoria
+      deprecated: false
+      description: ''
+      tags:
+        - /categoria
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: name
+                descricao:
+                  type: string
+                faixa_etaria:
+                  type: string
+                genero:
+                  type: string
+                nivel_habilidade:
+                  type: string
+                numero_jogadores:
+                  type: object
+                  properties:
+                    min:
+                      type: number
+                    max:
+                      type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /convite:
+    get:
+      summary: Obter convites
+      deprecated: false
+      description: ''
+      tags:
+        - /convite
+      parameters:
+        - name: status
+          in: query
+          description: status
+          required: false
+          schema:
+            type: string
+        - name: busca
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Convite'
+          headers: {}
+      security: []
+  /convite/{id}:
+    patch:
+      summary: Responder convite
+      deprecated: false
+      description: ''
+      tags:
+        - /convite
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+              required:
+                - status
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /autenticacao/registrar/:
+    post:
+      summary: Registrar jogador
+      deprecated: false
+      description: ''
+      tags:
+        - autenticacao
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                sexo:
+                  type: string
+                idade:
+                  type: string
+                nivel_habilidade:
+                  type: string
+                avatar:
+                  type: string
+                email:
+                  type: string
+              required:
+                - nome
+                - sexo
+                - idade
+                - nivel_habilidade
+                - avatar
+                - email
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /autenticacao/entrar:
+    get:
+      summary: Entrar
+      deprecated: false
+      description: ''
+      tags:
+        - autenticacao
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                senha:
+                  type: string
+              required:
+                - email
+                - senha
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+components:
+  schemas:
+    Jogador:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+        nome:
+          type: string
+        sexo:
+          type: string
+        idade:
+          type: string
+        nivel_habilidade:
+          type: string
+        avatar:
+          type: string
+        email:
+          type: string
+      required:
+        - id
+        - nome
+        - sexo
+        - idade
+        - nivel_habilidade
+        - avatar
+        - email
+    Jogo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+        status:
+          type: string
+          description: status
+        jogadores:
+          type: array
+          items: *ref_1
+          title: jogadores
+          description: Participantes da partida de vôlei
+        id_local:
+          type: string
+          description: Local da partida de vôlei
+        data:
+          type: string
+          format: date-time
+          description: Dia e horário da partida de vôlei
+        id_categoria:
+          type: string
+        id_anfitriao:
+          type: string
+          description: Organizador da partida
+        quantidade_horas:
+          type: integer
+        nota:
+          type: number
+          description: Avaliação da partida
+        acesso:
+          type: string
+          description: Público ou privado
+      required:
+        - id
+        - status
+        - id_local
+        - data
+        - id_categoria
+        - id_anfitriao
+        - quantidade_horas
+        - nota
+        - acesso
+    Local:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+        nome:
+          type: string
+        descricao:
+          type: string
+        endereco:
+          type: string
+        valor_hora:
+          type: string
+      required:
+        - id
+        - nome
+        - descricao
+        - endereco
+        - valor_hora
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+        nome:
+          type: string
+          description: name
+        descricao:
+          type: string
+        faixa_etaria:
+          type: string
+        genero:
+          type: string
+        nivel_habilidade:
+          type: string
+        numero_jogadores:
+          type: object
+          properties:
+            min:
+              type: number
+            max:
+              type: number
+          required:
+            - min
+            - max
+      required:
+        - id
+        - nome
+        - descricao
+    Convite:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+        jogo:
+          type: string
+        convidado:
+          type: string
+        anfitriao:
+          type: string
+        status:
+          type: string
+        data:
+          type: string
+          format: date-time
+      required:
+        - id
+        - jogo
+        - convidado
+        - status
+        - data
+        - anfitriao
+    Avaliacao:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID
+        nota:
+          type: string
+        comentario:
+          type: string
+      required:
+        - id
+        - nota
+        - comentario
+  securitySchemes: {}
+servers: []
